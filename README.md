@@ -1,3 +1,9 @@
 # proyecto-pooo
-hola
-prueba
+|INTEGRANTES|
+- Kevin Eduardo Lesmes Leiva
+- 
+-
+-
+-
+
+|INSTRUCCIONES PARA CORRER EL PROGRAMA|
