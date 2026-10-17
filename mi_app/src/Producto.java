@@ -1,4 +1,4 @@
-package mi_app.src;
+package src;
 import java.util.Scanner;
 
 

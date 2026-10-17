@@ -1,4 +1,4 @@
-package mi_app.src;
+package src;
 import java.util.ArrayList;
 import java.util.Scanner; 
 
@@ -17,6 +17,7 @@ public class Main{
             System.out.println("|Menu de opciones|");
             System.out.println("1. Crear producto");
             System.out.println("2. Ver lista de productos");
+            System.out.println("3. Mesas");
             System.out.println("0. Salir");
             x = scn.nextInt();
             scn.nextLine();
@@ -41,6 +42,11 @@ public class Main{
                     }
                     
                 }
+                case 3:{
+                   System.out.println("|Mesas|");
+                   System.out.print("fff");
+                }
+   
             }
         }
 
