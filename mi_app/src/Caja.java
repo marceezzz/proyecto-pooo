@@ -31,7 +31,7 @@ public class Caja {
     }
 
   public int getTotalTarjeta(){
-    return this.totaltarjeta ; 
+    return this.totalTarjeta ; 
     }
   
   public int getRecargosCobrados(){
@@ -63,7 +63,7 @@ public class Caja {
   }
   
   //regitrarVenta = returna el total cobrado o -1 si es invalido 
-  public int registrarVenta (){
+  public int registrarVenta (int subtotal , int metodo){
       final int EFECTIVO = 1 ; 
 
       int total = calcularTotal (subtotal , metodo) ;
@@ -86,6 +86,8 @@ public class Caja {
     }
         
       }
-      
-      
+  // toString = Informacion principal de la caja    
+  public String toString() {
+      return "Caja - ventas del dia: $" + this.ventasDeldia + ", pedidos atendidos: " + this.pedidosAtendidos ;
+  }
   }
