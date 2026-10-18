@@ -64,26 +64,28 @@ public class Pedido {
         cliente.liberarMesa();
     }
  
-    // resumen del pedido para mostrar en consola
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("|Pedido de ").append(cliente.getNombre()).append("|\n");
- 
-        if (cliente.getMesa() != null) {
-            sb.append("Mesa: ").append(cliente.getMesa().getNumero()).append("\n");
-        }
- 
-        if (items.isEmpty()) {
-            sb.append("(sin productos)\n");
-        } else {
-            for (ItemPedido item : items) {
-                sb.append(item).append("\n");
-            }
-        }
- 
-        sb.append("Total: ").append(calcularTotal()).append("\n");
-        sb.append("Estado: ").append(finalizado ? "Finalizado" : "Abierto");
-        return sb.toString();
+    // las impresiones
+public void mostrar() {
+    System.out.println("|Pedido de " + cliente.getNombre() + "|");
+
+    if (cliente.getMesa() != null) {
+        System.out.println("Mesa: " + cliente.getMesa().getNumero());
     }
+
+    if (items.isEmpty()) {
+        System.out.println("(sin productos)");
+    } else {
+        for (ItemPedido item : items) {
+            System.out.println(item);
+        }
+    }
+
+    System.out.println("Total: " + calcularTotal());
+
+    if (finalizado) {
+        System.out.println("Estado: Finalizado");
+    } else {
+        System.out.println("Estado: Abierto");
+    }
+}
 }
