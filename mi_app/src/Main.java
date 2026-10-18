@@ -11,6 +11,8 @@ public class Main{
         //Lista de productos
         ArrayList<Producto> ListaProductos = new ArrayList<>();
 
+        //Caja del restaurante 
+        var caja = new Caja();
 
         while (x != 0){ 
            
@@ -46,7 +48,34 @@ public class Main{
                    System.out.println("|Mesas|");
                    System.out.print("fff");
                 }
-   
+                //cobrar ( caja )
+                case 4:{
+                System.out.println("Subtotal del pedido: ");
+                double subtotal = scn.nextDouble();
+                System.out.println("Método (1. Efectivo, 2. Tarjeta): ");
+                int metodo = scn.nextInt();
+                double total = caja.registrarVenta(subtotal, metodo);
+                    if (total == -1.0) {
+                        System.out.println("Cobro inválido, revise el monto y el método");
+                    } else {
+                        System.out.println("Total cobrado: $" + total);
+                    }
+                    break;
+                }
+                    
+                // cierre de caja 
+                case 5 : {
+                    System.out.println("|Cierre del día|");
+                    System.out.println(caja.resumen());
+                    break;
+                }
+
+                default:{
+                    System.out.println("Opción inválida");
+                    break;
+                }
+                }
+            
             }
         }
 
