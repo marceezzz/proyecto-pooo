@@ -29,13 +29,24 @@ public class Producto {
     String getNombre(){
         return nombre;
     }
-
     int getPrecio(){
         return precio;
     }
-
     int getCantidad(){
         return cantidad;
+    }
+
+    //Setters
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+
+    public void setPrecio(int precio){
+        this.precio = precio;
+    }
+
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
     }
     //Función restar cantidad
     public void RestarCantidad(int numero){
