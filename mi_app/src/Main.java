@@ -15,7 +15,7 @@ public class Main{
         ArrayList<Mesa> ListaMesas = new ArrayList<>();
         for (int i = 1; i < 11; i++){
             ListaMesas.add(new Mesa(i));
-        }   
+        }
 
         //Lista de clientes
         ArrayList<Cliente> ListaClientes = new ArrayList<>();
@@ -47,8 +47,9 @@ public class Main{
                     System.out.println("|Menu de opciones|");
                     System.out.println("1. Crear producto");
                     System.out.println("2. Ver lista de productos");
-                    System.out.println("3. Cobrara Caja");
-                    System.out.println("4. Resumen del dia");
+                    System.out.println("3. Ver mesas");
+                    System.out.println("4. Cobrar Caja");
+                    System.out.println("5. Resumen del dia");
                     System.out.println("0. Salir");
                     y = scn.nextInt();
                     scn.nextLine();
@@ -77,26 +78,65 @@ public class Main{
                             System.out.println(p);
                             break;}
 
-                        //cobrar ( caja )
+                        //Mostrar mesas ocupadas
                         case 3:{
-                            System.out.println("Subtotal del pedido: ");
-                            double subtotal = scn.nextDouble();
+                            for(Mesa m : ListaMesas)
+                                System.out.println(m);
+
+                            break;
+                        }
+
+                        //cobrar ( caja )
+                        case 4:{
+                            //Verifica si hay pedidos
+                            if (ListaPedidos.size()==0){
+                                System.out.println("No hay pedidos \n");
+                                break;}
+
+                            //Seleccion pedido a cobrar
+                            boolean control = true; //variable control bucle
+                            int numeroPedido = -1;
+                            while(control){
+                            System.out.println("Seleccione el pedido a cobrar: ");
+                            int numero = 1;
+                            for (Pedido p : ListaPedidos){
+                                System.out.print("#" + numero + " ");
+                                p.Mostrar();
+                                ++numero;}
+                                
+                            numeroPedido = (scn.nextInt()) - 1;
+
+                            if (numeroPedido < 0 || numeroPedido > ListaPedidos.size()-1 ){ //Controla poner numeros negativos o mayores a la cantidad de pedidos
+                                System.out.println("Opcion invalida \n");
+                                continue;}
+                            
+                            control = false;
+                            }
+
+                            //Seleccion metodo de cobro
                             System.out.println("Método (1. Efectivo, 2. Tarjeta): ");
                             int metodo = scn.nextInt();
-                            double total = caja.registrarVenta(subtotal, metodo);
+
+                            double total = caja.registrarVenta(ListaPedidos.get(numeroPedido).calcularTotal(), metodo);
+                            
                             if (total == -1.0) {
-                                System.out.println("Cobro inválido, revise el monto y el método");
+                                System.out.println("Cobro inválido, revise el monto y el método\n");
                             } else {
-                                System.out.println("Total cobrado: $" + total);
+                                System.out.println("Total cobrado: $" + total + "\n");
                             }
+                            //Borrar pedido de la lista
+                            ListaPedidos.get(numeroPedido).getCliente().getMesa().desocupar();
+                            ListaPedidos.remove(numeroPedido);
                             break;}
                 
                         // cierre de caja 
-                        case 4: {
+                        case 5: {
                             System.out.println("|Cierre del día|");
                             System.out.println(caja.resumen());
                             break;}
-                        
+                        default:
+                            System.out.println("Opcion invalida");
+                            break;
                         
                         }
                     }

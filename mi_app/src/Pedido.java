@@ -17,9 +17,6 @@ public class Pedido {
   public Cliente getCliente() { return cliente; }
   public ArrayList<Producto> getItems() { return items;}
   public boolean getfinalizado() { return finalizado; }
-
-  //setters
-  public void PedidoFinalizado(){finalizado = true;}
   
 //aqui hice un metodo para poder escoger los productos dentro de las opciones del menu
   public boolean agregarDesdeMenu(ArrayList<Producto> menu, int opcion, int cantidad) {
@@ -73,19 +70,12 @@ public class Pedido {
         }
         return total;
     }
-}
-    /* 
-    // cierra el pedido y libera la mesa del cliente
-    public void finalizar() {
-        if (finalizado) {
-            return;
-        }
-        finalizado = true;
-        cliente.liberarMesa();
-    }
- 
+
+    //Termina el pedido
+    public void PedidoFinalizado(){finalizado = true;}
+
     // las impresiones
-public void mostrar() {
+public void Mostrar() {
     System.out.println("|Pedido de " + cliente.getNombre() + "|");
 
     if (cliente.getMesa() != null) {
@@ -95,18 +85,12 @@ public void mostrar() {
     if (items.isEmpty()) {
         System.out.println("(sin productos)");
     } else {
-        for (ItemPedido item : items) {
+        for (Producto item : items) {
             System.out.println(item);
         }
     }
 
-    System.out.println("Total: " + calcularTotal());
+    System.out.println("Total: " + calcularTotal() + "\n");
 
-    if (finalizado) {
-        System.out.println("Estado: Finalizado");
-    } else {
-        System.out.println("Estado: Abierto");
-    }
 }
 }
-*/

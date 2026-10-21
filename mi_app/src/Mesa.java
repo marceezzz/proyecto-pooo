@@ -27,10 +27,12 @@ public class Mesa {
             System.out.println("La mesa seleccionada esta ocupada, elegir otra");
             return false;}
         
-        
-        
         ocupada = true;
         return true;}
+    
+    public void desocupar(){
+        ocupada = false;
+    }
         
     
     public String toString(){

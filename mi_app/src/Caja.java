@@ -85,7 +85,7 @@ public class Caja {
  
   //resumen
   public String resumen () {
-    return "Pedidos atendidos: " + this.pedidosAtendidos + " \n | Vendidos : $" + this.ventasDeldia + "\nEfectivo: $" + this.totalEfectivo + "\n | Tarjeta: $" + this.totalTarjeta + "\n(recargos: $" + this.recargosCobrados + ")";
+return "Pedidos atendidos: " + this.pedidosAtendidos + " \nVendidos : $" + this.ventasDeldia + "\nEfectivo: $" + this.totalEfectivo + "\nTarjeta: $" + this.totalTarjeta + "\nRecargos: $" + this.recargosCobrados + "\n";
   }
  
   //toString = informacion principal de la caja
