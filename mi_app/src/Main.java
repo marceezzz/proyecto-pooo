@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 //Menu de opciones
 public class Main{
-    static void main(String[] args){
+    public static void main(String[] args){
         Scanner scn = new Scanner (System.in);
         int x = -1; //Controlador del primer bucle
         
@@ -49,6 +49,7 @@ public class Main{
                     System.out.println("2. Ver lista de productos");
                     System.out.println("3. Cobrara Caja");
                     System.out.println("4. Resumen del dia");
+                    System.out.println("5. Crear Pedido");
                     System.out.println("0. Salir");
                     y = scn.nextInt();
                     scn.nextLine();
@@ -96,7 +97,71 @@ public class Main{
                             System.out.println("|Cierre del día|");
                             System.out.println(caja.resumen());
                             break;}
-                        
+
+                        case 5: {
+                          if (ListaProductos.isEmpty()) {
+                            System.out.println("Primero crea productos (opcion 1).");
+                            break;
+                         }
+ 
+                         System.out.println("Nombre del cliente: ");
+                         String nombreCliente = scn.nextLine();
+                         System.out.println("Documento: ");
+                         String documento = scn.nextLine();
+                         System.out.println("Telefono: ");
+                         String telefono = scn.nextLine();
+                         Cliente cliente = new Cliente(nombreCliente, documento, telefono);
+ 
+                    
+                        if (!ListaMesas.isEmpty()) {
+                         System.out.println("Mesas libres:");
+                         for (Mesa m : ListaMesas) {
+                            if (!m.getOcupada()) {
+                                System.out.println("Mesa " + m.getNumero() + " (" + m.getTipo() + ")");
+                            }
+                        }
+                        System.out.println("Numero de mesa (0 para ninguna): ");
+                        int numMesa = scn.nextInt();
+                        scn.nextLine();
+ 
+                        if (numMesa != 0) {
+                            boolean encontrada = false;
+                            for (Mesa m : ListaMesas) {
+                                if (m.getNumero() == numMesa) {
+                                    encontrada = true;
+                                    cliente.asignarMesa(m);
+                                }
+                            }
+                            if (!encontrada) {
+                                System.out.println("Esa mesa no existe, el pedido queda sin mesa.");
+                            }
+                        }
+                    }
+ 
+                    Pedido pedido = new Pedido(cliente);
+ 
+                    
+                    int opcion = -1;
+                    while (opcion != 0) {
+                        for (int i = 0; i < ListaProductos.size(); i++) {
+                            System.out.println((i + 1) + ". " + ListaProductos.get(i));
+                        }
+                        System.out.println("Numero de producto (0 para terminar): ");
+                        opcion = scn.nextInt();
+ 
+                        if (opcion != 0) {
+                            System.out.println("Cantidad: ");
+                            int cantidad = scn.nextInt();
+                            pedido.agregarDesdeMenu(ListaProductos, opcion, cantidad);
+                        }
+                        scn.nextLine();
+                    }
+ 
+                    ListaPedidos.add(pedido);
+                    System.out.println(pedido);
+                    break;
+                }
+               
                         
                         }
                     }
