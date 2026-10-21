@@ -4,31 +4,22 @@ public class Cliente {
 
     // Atributos
     private String nombre;
-    private String documento;
-    private String telefono;
     private Mesa mesa;
 
     // Constructor
-    public Cliente(String nombre, String documento, String telefono) {
+    public Cliente(String nombre, Mesa mesa) {
         this.nombre = nombre;
-        this.documento = documento;
-        this.telefono = telefono;
-        this.mesa = null;
+        this.mesa = mesa;
     }
 
     // Getters
     public String getNombre() {return nombre;}
-    public String getDocumento() {return documento;}
-    public String getTelefono() {return telefono;}
     public Mesa getMesa() {return mesa;}
 
-    // Setters
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+    
 
     // Asigna una mesa disponible al cliente
-    public boolean asignarMesa(Mesa mesa) {
+    /*public boolean asignarMesa(Mesa mesa) {
         if (mesa.getOcupada()) {
             System.out.println("La mesa " + mesa.getNumero() + " está ocupada.");
             return false;
@@ -37,7 +28,7 @@ public class Cliente {
         this.mesa = mesa;
         mesa.setOcupada(true);
         return true;
-    }
+    }*/
 
     // Libera la mesa cuando termina el pedido
     public void liberarMesa() {
@@ -56,8 +47,6 @@ public class Cliente {
         }
 
         return "Cliente: " + nombre
-                + "\nDocumento: " + documento
-                + "\nTeléfono: " + telefono
                 + "\n" + informacionMesa;
     }
 }
