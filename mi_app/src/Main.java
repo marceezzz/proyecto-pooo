@@ -236,7 +236,7 @@ public class Main{
                             }
 
                             //Seleccion metodo de cobro
-                            System.out.println("Método (1. Efectivo, 2. Tarjeta): ");
+                            System.out.println("Método 1. Efectivo   2. Tarjeta (se cobra 5%): ");
                             int metodo = scn.nextInt();
 
                             double total = caja.registrarVenta(ListaPedidos.get(numeroPedido).calcularTotal(), metodo);
