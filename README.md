@@ -7,3 +7,4 @@
 - Helen Tatiana Hernandez Moreno
 
 |INSTRUCCIONES PARA CORRER EL PROGRAMA|
+Instalar el JKD en su ultima versión, luego descargar los archivos del repositorio, se recomienda compilarlos y ejecutarlos en un IDE
