@@ -59,7 +59,7 @@ public class Pedido {
         for (Producto p : items){
             System.out.println(p);
         }
-        System.out.println("Total: " + calcularTotal() + "\n");
+        System.out.println("Total: $" + calcularTotal() + "\n");
     }
 
     // suma los subtotales de todas las líneas
@@ -90,7 +90,7 @@ public void Mostrar() {
         }
     }
 
-    System.out.println("Total: " + calcularTotal() + "\n");
+    System.out.println("Total: $" + calcularTotal() + "\n");
 
 }
 }

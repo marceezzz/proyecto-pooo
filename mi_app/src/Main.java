@@ -13,7 +13,7 @@ public class Main{
 
         //Lista de mesas
         ArrayList<Mesa> ListaMesas = new ArrayList<>();
-        for (int i = 1; i < 11; i++){
+        for (int i = 1; i < 6; i++){
             ListaMesas.add(new Mesa(i));
         }
 
@@ -23,6 +23,8 @@ public class Main{
         //Lista de pedidos
         ArrayList<Pedido> ListaPedidos = new ArrayList<>();
 
+        //Lista de facturas
+        ArrayList<Factura> ListaFacturas = new ArrayList<>();
         //Caja del restaurante 
         var caja = new Caja();
 
@@ -50,6 +52,7 @@ public class Main{
                     System.out.println("3. Ver mesas");
                     System.out.println("4. Cobrar Caja");
                     System.out.println("5. Resumen del dia");
+                    System.out.println("6. Ver facturas");
                     System.out.println("0. Salir");
                     control2 = scn.nextInt();
                     scn.nextLine();
@@ -201,7 +204,7 @@ public class Main{
                         case 3:{
                             for(Mesa m : ListaMesas)
                                 System.out.println(m);
-
+                            System.out.println("\n");
                             break;
                         }
 
@@ -245,6 +248,10 @@ public class Main{
                             } else {
                                 System.out.println("Total cobrado: $" + total + "\n");
                             }
+
+                            //Crea la factura
+                            ListaFacturas.add(new Factura(ListaPedidos.get(numeroPedido), metodo, caja.getPedidosAtendidos(),total));
+
                             //Desocupa la mesa
                             ListaPedidos.get(numeroPedido).getCliente().getMesa().desocupar();
                             //Borra el cliente de la lista
@@ -258,6 +265,18 @@ public class Main{
                             System.out.println("|Cierre del día|");
                             System.out.println(caja.resumen());
                             break;}
+                        
+                        // Ver facturas
+                        case 6: {
+                            // Comprueba si hay facturas registradas
+                            if (ListaFacturas.size()==0){
+                                System.out.println("No hay facturas registradas \n");
+                                break;
+                            }
+                            for (Factura f : ListaFacturas)
+                                f.MostrarFactura();
+                            break;
+                        }
                         default:
                             System.out.println("Opcion invalida \n");
                             break;
@@ -275,6 +294,19 @@ public class Main{
                         System.out.println("!Lo sentimos, no tenemos productos ahora mismo! \n");
                         break;}
 
+                    //Verifica si todas las mesas estan ocupadas
+                    int mesasOcupadas = 0;
+                    for (Mesa m :ListaMesas){
+                        if (m.getOcupada()){
+                            ++mesasOcupadas;
+                        }
+                    }
+                    
+                    if (mesasOcupadas == ListaMesas.size()){
+                        System.out.println("!Lo sentimos, no tenemos mesas disponibles!");
+                        break;
+                    }
+
                     System.out.println("Ingrese su nombre: "); //Nombre cliente
                     String nombre = scn.nextLine();
                     int control4 = -1;  //controlador cuatro bucle
@@ -288,6 +320,13 @@ public class Main{
                         
                         System.out.println("Ingrese el numero de la mesa: ");
                         int mesaSeleccionada = scn.nextInt();
+                        scn.nextLine();
+
+                        //Verificacion mesa seleccionada valida
+                        if (mesaSeleccionada < 1 || mesaSeleccionada > 10){
+                            System.out.println("Opción invalida \n");
+                            continue;}
+
                         mesaSeleccionada -=1;//Le resto uno para hallar su posicion en la lista
 
                         //Verificacion si la mesa seleccionada se encuentra disponible

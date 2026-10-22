@@ -16,19 +16,7 @@ public class Cliente {
     public String getNombre() {return nombre;}
     public Mesa getMesa() {return mesa;}
 
-    
 
-    // Asigna una mesa disponible al cliente
-    /*public boolean asignarMesa(Mesa mesa) {
-        if (mesa.getOcupada()) {
-            System.out.println("La mesa " + mesa.getNumero() + " está ocupada.");
-            return false;
-        }
-
-        this.mesa = mesa;
-        mesa.setOcupada(true);
-        return true;
-    }*/
 
     // Libera la mesa cuando termina el pedido
     public void liberarMesa() {
