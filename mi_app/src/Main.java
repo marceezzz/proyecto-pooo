@@ -11,11 +11,8 @@ public class Main{
         //Lista de productos
         ArrayList<Producto> ListaProductos = new ArrayList<>();
 
-        //Lista de mesas
-        ArrayList<Mesa> ListaMesas = new ArrayList<>();
-        for (int i = 1; i < 6; i++){
-            ListaMesas.add(new Mesa(i));
-        }
+        //Local con la cuadrícula de mesas (2 filas x 5 columnas = 10 mesas)
+        LocalRestaurante local = new LocalRestaurante(2, 5);
 
         //Lista de clientes
         ArrayList<Cliente> ListaClientes = new ArrayList<>();
@@ -200,11 +197,9 @@ public class Main{
                             System.out.println(p);
                             break;}
 
-                        //Mostrar mesas ocupadas
+                        //Ver mesas (cuadrícula)
                         case 3:{
-                            for(Mesa m : ListaMesas)
-                                System.out.println(m);
-                            System.out.println("\n");
+                            MenuMesas.mostrar(scn, local);
                             break;
                         }
 
@@ -294,15 +289,8 @@ public class Main{
                         System.out.println("!Lo sentimos, no tenemos productos ahora mismo! \n");
                         break;}
 
-                    //Verifica si todas las mesas estan ocupadas
-                    int mesasOcupadas = 0;
-                    for (Mesa m :ListaMesas){
-                        if (m.getOcupada()){
-                            ++mesasOcupadas;
-                        }
-                    }
-                    
-                    if (mesasOcupadas == ListaMesas.size()){
+                    //Verifica si hay mesas libres
+                    if (local.contarLibres() == 0){
                         System.out.println("!Lo sentimos, no tenemos mesas disponibles!");
                         break;
                     }
@@ -315,30 +303,31 @@ public class Main{
                     //Seleccion de mesa
                     while (control4 != 0) {
                         System.out.println("|Seleccione una mesa|");
-                        for (Mesa m : ListaMesas)
-                            System.out.println(m);
+                        local.dibujar();
                         
-                        System.out.println("Ingrese el numero de la mesa: ");
-                        int mesaSeleccionada = scn.nextInt();
+                        System.out.println("Fila: ");
+                        int fila = scn.nextInt();
+                        System.out.println("Columna: ");
+                        int columna = scn.nextInt();
                         scn.nextLine();
 
+                        Mesa mesaSeleccionada = local.getMesa(fila, columna);
+
                         //Verificacion mesa seleccionada valida
-                        if (mesaSeleccionada < 1 || mesaSeleccionada > 10){
+                        if (mesaSeleccionada == null){
                             System.out.println("Opción invalida \n");
                             continue;}
 
-                        mesaSeleccionada -=1;//Le resto uno para hallar su posicion en la lista
-
                         //Verificacion si la mesa seleccionada se encuentra disponible
-                        if (ListaMesas.get(mesaSeleccionada).getOcupada() == false){
-                            ListaMesas.get(mesaSeleccionada).ocupar();
+                        if (mesaSeleccionada.getEstado().equals("L")){
+                            mesaSeleccionada.ocupar();
                             //añadimos el cliente a la lista de clientes
-                            ListaClientes.add(new Cliente(nombre, ListaMesas.get(mesaSeleccionada)));
+                            ListaClientes.add(new Cliente(nombre, mesaSeleccionada));
                             control4 = 0; // fin bucle
                             break;}
 
-                        //Mesa ocupada
-                        ListaMesas.get(mesaSeleccionada).ocupar();}
+                        //Mesa ocupada o reservada
+                        System.out.println("La mesa seleccionada no esta disponible, elegir otra");}
 
                         //Generar pedido
                         ListaPedidos.add(new Pedido(ListaClientes.get((ListaClientes.size())-1)));
@@ -438,6 +427,3 @@ public class Main{
             
         }
     }
-        
-    
-
