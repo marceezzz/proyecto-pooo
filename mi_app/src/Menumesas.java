@@ -3,7 +3,7 @@ package src;
 import java.util.Scanner;
 
 // Submenú de la cuadrícula de mesas. Se llama desde el menú principal del Main.
-public class MenuMesas {
+public class Menumesas {
 
     public static void mostrar(Scanner scn, LocalRestaurante local) {
         int opcion = -1;

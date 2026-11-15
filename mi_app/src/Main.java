@@ -199,7 +199,7 @@ public class Main{
 
                         //Ver mesas (cuadrícula)
                         case 3:{
-                            MenuMesas.mostrar(scn, local);
+                            Menumesas.mostrar(scn, local);
                             break;
                         }
 
