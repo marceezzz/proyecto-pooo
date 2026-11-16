@@ -50,7 +50,7 @@ public class Pedido {
         }
     
     items = java.util.Arrays.copyOf(items, items.length + 1);
-    items[items.length - 1] = new Producto(elegido, cantidad);
+    items[items.length - 1] = elegido.copiar(cantidad);
         return true;}
     
     

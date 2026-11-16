@@ -73,7 +73,20 @@ public class Main{
                                         break;
                                     //Crear productos
                                     case 1:
-                                        System.out.println("Nombre del producto: ");
+                                        //Elige el tipo de producto a crear
+                                        System.out.println("Tipo de producto: ");
+                                        System.out.println("1. Plato");
+                                        System.out.println("2. Bebida");
+                                        System.out.println("3. Postre");
+                                        int tipo = scn.nextInt();
+                                        scn.nextLine();
+                                        
+                                        if (tipo < 1 || tipo > 3){
+                                            System.out.println("Opción invalida \n");
+                                            break;}
+                                        
+                                        
+                                        System.out.println("Ingrese el nombre del producto: ");
                                         String nombre = scn.nextLine();
                                         System.out.println("Ingrese el precio: ");
                                         int precio = scn.nextInt();
@@ -83,7 +96,19 @@ public class Main{
                                         if (cantidad < 0) //controla que no pongan cantidades negativas de productos
                                             cantidad = 0;
 
-                                        ListaProductos = agregar(ListaProductos, new Producto(nombre,precio,cantidad));
+                                        switch (tipo){
+                                            case 1:
+                                                ListaProductos = agregar(ListaProductos, new Plato(nombre,precio,cantidad));
+                                                break;
+                                            case 2:
+                                                System.out.println("¿Es alcoholica? 1. Si  2. No");
+                                                int alcoholica = scn.nextInt();
+                                                ListaProductos = agregar(ListaProductos, new Bebida(nombre,precio,cantidad, alcoholica == 1));
+                                                break;
+                                            case 3:
+                                                ListaProductos = agregar(ListaProductos, new Postre(nombre,precio,cantidad));
+                                                break;
+                                        }       
                                         System.out.println();
                                         break;
                                 

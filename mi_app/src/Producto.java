@@ -5,7 +5,7 @@ package src;
 //Esta clase sirve para crear productos
 
 
-public class Producto {
+public abstract class Producto {
     //atributos
     private String nombre;
     private int precio; 
@@ -56,16 +56,14 @@ public class Producto {
     public void SumarCantidad(int numero){
         cantidad += numero;}
     
-    //Calcular precio
-    public int CalcularTotal(){
-        int total = cantidad*precio;
-        return total;
-    }
-    
+    // Metodos que las clases hijas codificaran a su manera
+    public abstract int CalcularTotal();
+    public abstract String getCategoria();
+    public abstract Producto copiar(int cantidad);
 
     
-
     //muestra los atributos de los objetos
+    @Override 
     public String toString(){
         return "Nombre: " + nombre + "\n" + "Precio: " + precio + "\n" + "Cantidad: " + cantidad + "\n" ;
     }
