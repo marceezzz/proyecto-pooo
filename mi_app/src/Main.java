@@ -1,5 +1,4 @@
 package src;
-import java.util.ArrayList;
 import java.util.Scanner; 
 
 //Menu de opciones
@@ -9,19 +8,19 @@ public class Main{
         int control1 = -1; //Controlador del primer bucle
         
         //Lista de productos
-        ArrayList<Producto> ListaProductos = new ArrayList<>();
+        Producto[] ListaProductos = new Producto[0];
 
         //Local con la cuadrícula de mesas (2 filas x 5 columnas = 10 mesas)
         LocalRestaurante local = new LocalRestaurante(2, 5);
 
         //Lista de clientes
-        ArrayList<Cliente> ListaClientes = new ArrayList<>();
+        Cliente[] ListaClientes = new Cliente[0];
 
         //Lista de pedidos
-        ArrayList<Pedido> ListaPedidos = new ArrayList<>();
+        Pedido[] ListaPedidos = new Pedido[0];
 
         //Lista de facturas
-        ArrayList<Factura> ListaFacturas = new ArrayList<>();
+        Factura[] ListaFacturas = new Factura[0];
         //Caja del restaurante 
         var caja = new Caja();
 
@@ -84,7 +83,7 @@ public class Main{
                                         if (cantidad < 0) //controla que no pongan cantidades negativas de productos
                                             cantidad = 0;
 
-                                        ListaProductos.add(new Producto(nombre,precio,cantidad));
+                                        ListaProductos = agregar(ListaProductos, new Producto(nombre,precio,cantidad));
                                         System.out.println();
                                         break;
                                 
@@ -94,7 +93,7 @@ public class Main{
                                     
                                     //Modificar productos
                                     case 2:
-                                        if (ListaProductos.size()==0){ //Verifica que si hayan productos para modificar
+                                        if (ListaProductos.length==0){ //Verifica que si hayan productos para modificar
                                             System.out.println("!Sin productos para modificar! \n");
                                             break;}
                                         int control6 = -1;
@@ -114,7 +113,7 @@ public class Main{
                                         scn.nextLine();
 
                                         //verifica que la opciones sea valida
-                                        if (productoModificar < 0 || productoModificar > ListaProductos.size()-1){
+                                        if (productoModificar < 0 || productoModificar > ListaProductos.length-1){
                                             System.out.println("Opción invalida \n");
                                             continue;}
                                         control6 = 0;} //fin bucle
@@ -140,14 +139,14 @@ public class Main{
 
                                             //Ver caracteristicas del producto
                                             case 1:
-                                                System.out.println(ListaProductos.get(productoModificar));
+                                                System.out.println(ListaProductos[productoModificar]);
                                                 break;
 
                                             //Cambia nombre del producto
                                             case 2:
                                                 System.out.println("Ingrese el nuevo nombre: ");
                                                 String nombre2 = scn.nextLine();
-                                                ListaProductos.get(productoModificar).setNombre(nombre2);
+                                                ListaProductos[productoModificar].setNombre(nombre2);
                                                 break;
 
                                             //Cambia precio del producto
@@ -155,7 +154,7 @@ public class Main{
                                                 System.out.println("Ingrese el nuevo precio: ");
                                                 int precio2 = scn.nextInt();
                                                 scn.nextLine();
-                                                ListaProductos.get(productoModificar).setPrecio(precio2);
+                                                ListaProductos[productoModificar].setPrecio(precio2);
                                                 break;
 
                                             //Cambia la cantidad del producto
@@ -163,13 +162,13 @@ public class Main{
                                                 System.out.println("Ingrese la nueva cantidad: ");
                                                 int cantidad2 = scn.nextInt();
                                                 scn.nextLine();
-                                                ListaProductos.get(productoModificar).setCantidad(cantidad2);
+                                                ListaProductos[productoModificar].setCantidad(cantidad2);
                                                 break;
                                             
                                             //borrar producto
                                             case 5:
                                                 System.out.println("Producto borrado");
-                                                ListaProductos.remove(productoModificar);
+                                                ListaProductos = eliminar(ListaProductos, productoModificar);
                                                 control5 = 0;
                                                 break;
 
@@ -189,7 +188,7 @@ public class Main{
 
                         //Ver lista de productos
                         case 2:{
-                            if (ListaProductos.size()==0){ //Verifica que si hayan productos para mostrar
+                            if (ListaProductos.length==0){ //Verifica que si hayan productos para mostrar
                                 System.out.println("!Sin productos para mostrar! \n");
                                 break;}
                             System.out.println("|Lista de productos|");
@@ -206,7 +205,7 @@ public class Main{
                         //cobrar ( caja )
                         case 4:{
                             //Verifica si hay pedidos
-                            if (ListaPedidos.size()==0){
+                            if (ListaPedidos.length==0){
                                 System.out.println("No hay pedidos \n");
                                 break;}
 
@@ -223,7 +222,7 @@ public class Main{
                                 
                             numeroPedido = (scn.nextInt()) - 1;
 
-                            if (numeroPedido < 0 || numeroPedido > ListaPedidos.size()-1 ){ //Controla poner numeros negativos o mayores a la cantidad de pedidos
+                            if (numeroPedido < 0 || numeroPedido > ListaPedidos.length-1 ){ //Controla poner numeros negativos o mayores a la cantidad de pedidos
                                 System.out.println("Opcion invalida \n");
                                 continue;}
                             
@@ -234,7 +233,7 @@ public class Main{
                             System.out.println("Método 1. Efectivo   2. Tarjeta (se cobra 5%): ");
                             int metodo = scn.nextInt();
 
-                            double total = caja.registrarVenta(ListaPedidos.get(numeroPedido).calcularTotal(), metodo);
+                            double total = caja.registrarVenta(ListaPedidos[numeroPedido].calcularTotal(), metodo);
                             
                             if (total == -1.0) {
                                 System.out.println("Cobro inválido, revise el monto y el método\n");
@@ -245,14 +244,14 @@ public class Main{
                             }
 
                             //Crea la factura
-                            ListaFacturas.add(new Factura(ListaPedidos.get(numeroPedido), metodo, caja.getPedidosAtendidos(),total));
+                            ListaFacturas = agregar(ListaFacturas, new Factura(ListaPedidos[numeroPedido], metodo, caja.getPedidosAtendidos(),total));
 
                             //Desocupa la mesa
-                            ListaPedidos.get(numeroPedido).getCliente().getMesa().desocupar();
+                            ListaPedidos[numeroPedido].getCliente().getMesa().desocupar();
                             //Borra el cliente de la lista
-                            ListaClientes.remove(numeroPedido);
+                            ListaClientes = eliminar(ListaClientes, numeroPedido);
                             //Borra el pedido de la lista
-                            ListaPedidos.remove(numeroPedido);
+                            ListaPedidos = eliminar(ListaPedidos, numeroPedido);
                             break;}
                 
                         // cierre de caja 
@@ -264,7 +263,7 @@ public class Main{
                         // Ver facturas
                         case 6: {
                             // Comprueba si hay facturas registradas
-                            if (ListaFacturas.size()==0){
+                            if (ListaFacturas.length==0){
                                 System.out.println("No hay facturas registradas \n");
                                 break;
                             }
@@ -285,7 +284,7 @@ public class Main{
                 case 2:{
 
                     //Verifica que existan productos para comprar
-                    if (ListaProductos.size()==0){ 
+                    if (ListaProductos.length==0){ 
                         System.out.println("!Lo sentimos, no tenemos productos ahora mismo! \n");
                         break;}
 
@@ -322,7 +321,7 @@ public class Main{
                         if (mesaSeleccionada.getEstado().equals("L")){
                             mesaSeleccionada.ocupar();
                             //añadimos el cliente a la lista de clientes
-                            ListaClientes.add(new Cliente(nombre, mesaSeleccionada));
+                            ListaClientes = agregar(ListaClientes, new Cliente(nombre, mesaSeleccionada));
                             control4 = 0; // fin bucle
                             break;}
 
@@ -330,10 +329,10 @@ public class Main{
                         System.out.println("La mesa seleccionada no esta disponible, elegir otra");}
 
                         //Generar pedido
-                        ListaPedidos.add(new Pedido(ListaClientes.get((ListaClientes.size())-1)));
+                        ListaPedidos = agregar(ListaPedidos, new Pedido(ListaClientes[ListaClientes.length-1]));
                         
                         //Muestra el menú
-                         while (!ListaPedidos.get((ListaPedidos.size())-1).getfinalizado()){
+                         while (!ListaPedidos[ListaPedidos.length-1].getfinalizado()){
                             System.out.println("|MENÚ|"+"\n");
 
                             int i = 1;
@@ -353,13 +352,13 @@ public class Main{
                             //Salirse del menu
                             if (opcion == 0){
                                 //El cliente no compro ningun producto
-                                if (ListaPedidos.getLast().getItems().size()==0){
+                                if (ListaPedidos[ListaPedidos.length-1].getItems().length==0){
                                     //Desocupa la mesa
-                                    ListaPedidos.getLast().getCliente().getMesa().desocupar();
+                                    ListaPedidos[ListaPedidos.length-1].getCliente().getMesa().desocupar();
                                     //Borra el cliente de la lista
-                                    ListaClientes.remove(ListaClientes.getLast());
+                                    ListaClientes = eliminar(ListaClientes, ListaClientes.length-1);
                                     //Borra el pedido de la lista
-                                    ListaPedidos.remove(ListaPedidos.getLast());
+                                    ListaPedidos = eliminar(ListaPedidos, ListaPedidos.length-1);
                                     break;
                                 }
                                 break;                          
@@ -367,11 +366,11 @@ public class Main{
 
                             //Muestra los productos pedidos
                             if (opcion==i){
-                                ListaPedidos.get((ListaPedidos.size())-1).ProductosEscogidos();
+                                ListaPedidos[ListaPedidos.length-1].ProductosEscogidos();
                                 continue;}
 
                             //Verifica que la opcion tenga sentido
-                            if (opcion < 1 || opcion > ListaProductos.size()){
+                            if (opcion < 1 || opcion > ListaProductos.length){
                                 System.out.println("Opción invalida");
                                 continue;}
 
@@ -380,13 +379,13 @@ public class Main{
                             scn.nextLine();
                             
                             //Verifica que la cantidad escogida no sea mayor al inventario de productos
-                            if (cantidad < 1 || cantidad > ListaProductos.get(opcion-1).getCantidad()){
+                            if (cantidad < 1 || cantidad > ListaProductos[opcion-1].getCantidad()){
                                 System.out.println("!No tenemos esa cantidad de producto!");
                                 continue;}
                             
 
                             //Agrega los productos pedidos
-                            ListaPedidos.get((ListaPedidos.size())-1).agregarDesdeMenu(ListaProductos,opcion,cantidad);
+                            ListaPedidos[ListaPedidos.length-1].agregarDesdeMenu(ListaProductos,opcion,cantidad);
                             
                             
                             boolean control8 = true;
@@ -401,8 +400,8 @@ public class Main{
                                     continue;
                                 case 2:
                                     control8 = false;
-                                    ListaPedidos.get((ListaPedidos.size())-1).PedidoFinalizado();//termina el pedido
-                                    ListaPedidos.get((ListaPedidos.size())-1).ProductosEscogidos();//muestra los productos escogidos
+                                    ListaPedidos[ListaPedidos.length-1].PedidoFinalizado();//termina el pedido
+                                    ListaPedidos[ListaPedidos.length-1].ProductosEscogidos();//muestra los productos escogidos
                                     break;
                                 default:
                                     System.out.println("Opción invalida");
@@ -426,4 +425,12 @@ public class Main{
             }
             
         }
-    }
+    
+    private static Producto[] agregar(Producto[] a, Producto x) { Producto[] n=java.util.Arrays.copyOf(a,a.length+1); n[a.length]=x; return n; }
+    private static Cliente[] agregar(Cliente[] a, Cliente x) { Cliente[] n=java.util.Arrays.copyOf(a,a.length+1); n[a.length]=x; return n; }
+    private static Pedido[] agregar(Pedido[] a, Pedido x) { Pedido[] n=java.util.Arrays.copyOf(a,a.length+1); n[a.length]=x; return n; }
+    private static Factura[] agregar(Factura[] a, Factura x) { Factura[] n=java.util.Arrays.copyOf(a,a.length+1); n[a.length]=x; return n; }
+    private static Producto[] eliminar(Producto[] a,int i) { Producto[] n=new Producto[a.length-1]; System.arraycopy(a,0,n,0,i); System.arraycopy(a,i+1,n,i,a.length-i-1); return n; }
+    private static Cliente[] eliminar(Cliente[] a,int i) { Cliente[] n=new Cliente[a.length-1]; System.arraycopy(a,0,n,0,i); System.arraycopy(a,i+1,n,i,a.length-i-1); return n; }
+    private static Pedido[] eliminar(Pedido[] a,int i) { Pedido[] n=new Pedido[a.length-1]; System.arraycopy(a,0,n,0,i); System.arraycopy(a,i+1,n,i,a.length-i-1); return n; }
+}

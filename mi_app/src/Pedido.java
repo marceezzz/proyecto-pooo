@@ -1,30 +1,29 @@
 package src;
-import java.util.ArrayList;
 
 // Atributos
 public class Pedido {
   private Cliente cliente; // Lo estoy relacionando directamente con la clase cliente
-  private ArrayList<Producto> items; //Lista de productos para comprar
+  private Producto[] items; //Lista de productos para comprar
   private boolean finalizado; // si el pedido esta finalizado o esta en curso
 
   public Pedido (Cliente cliente) {
     this.cliente = cliente;
-    this.items = new ArrayList<>();
+    this.items = new Producto[0];
     this.finalizado = false;
   }
 
   //getters
   public Cliente getCliente() { return cliente; }
-  public ArrayList<Producto> getItems() { return items;}
+  public Producto[] getItems() { return items;}
   public boolean getfinalizado() { return finalizado; }
   
 //aqui hice un metodo para poder escoger los productos dentro de las opciones del menu
-  public boolean agregarDesdeMenu(ArrayList<Producto> menu, int opcion, int cantidad) {
+  public boolean agregarDesdeMenu(Producto[] menu, int opcion, int cantidad) {
     if (finalizado) {
         System.out.println("El pedido ya está finalizado, no se pueden agregar productos.");
         return false;
       }
-    if (opcion < 1 || opcion > menu.size()) {
+    if (opcion < 1 || opcion > menu.length) {
         System.out.println("Opción no válida");
         return false;
       }
@@ -33,7 +32,7 @@ public class Pedido {
         return false;
         }
     
-    Producto elegido = menu.get(opcion - 1);
+    Producto elegido = menu[opcion - 1];
 
     if (elegido.getCantidad() < cantidad){
         System.out.println("La cantidad ingresada es mayor a la que tenemos en el inventario");
@@ -50,7 +49,8 @@ public class Pedido {
             }
         }
     
-    items.add(new Producto(elegido, cantidad));
+    items = java.util.Arrays.copyOf(items, items.length + 1);
+    items[items.length - 1] = new Producto(elegido, cantidad);
         return true;}
     
     
@@ -82,7 +82,7 @@ public void Mostrar() {
         System.out.println("Mesa: " + cliente.getMesa().getNumero());
     }
 
-    if (items.isEmpty()) {
+    if (items.length == 0) {
         System.out.println("(sin productos)");
     } else {
         for (Producto item : items) {
